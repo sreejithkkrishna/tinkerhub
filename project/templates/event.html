@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block content %}
+  <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + event.author.image_file) }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{{url_for('events.user_events',username=event.author.username)}}">{{ event.author.username }}</a>
+        <small class="text-muted">{{ event.date_posted.strftime('%Y-%m-%d') }}</small>
+        
+      </div>
+      <h1 class="article-title">{{ event.title }}</h1>
+      <br>
+      <h6> Date : {{event.event_date}}</h6>
+      <h6> Place : {{event.place}},{{event.city}},{{event.state}}</h6>
+      
+      {% if current_user == event.author %}
+      <h6> Total Participent : 
+       
+        {{ event.participents.__len__() }}
+
+      {% else %}
+
+      <h6> Available seats : 
+        {% if event.seat != 0 %}
+          {{event.seat }}
+        {% else %}
+          No seats available
+        {% endif %}
+      </h6>
+      {% endif %}
+      
+      <p class="article-content"><br>{{ event.description }}</p>
+      {% if event.author == current_user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('events.update_event', event_id=event.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            <br>
+            <a class="btn btn-success btn-sm mt-1 mb-1" href="{{ url_for('events.participent_pdf', event_id=event.id) }}">Download Participent Details</a>
+          </div>
+      {% else %}
+            {% if current_user in event.participents %}
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{{ url_for('events.cancel_participate', event_id=event.id) }}">Cancel</a>
+            
+            {% else %}
+              {% if event.seat != 0 %}
+              <a class="btn btn-success btn-sm mt-1 mb-1" href="{{ url_for('events.participate_in_event', event_id=event.id) }}">Participate</a>
+              {% endif %}
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+  </article>
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete event?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form action="{{ url_for('events.delete_event', event_id=event.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

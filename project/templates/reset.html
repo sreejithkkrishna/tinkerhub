@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.button{
+    border-radius: 2px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  border-radius: 2px;
+  color: white;
+  background-color: red;
+  text-align: center;
+  width: 100%;
+  font-size: 18px;
+}
+
+
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Flask Blog</h1>
+  <p>To {{message}} please visit the following link,if you did not make this request then simply ignore this mail</p>
+  <p><a href="{{url}}"><button>{{message}}</button></a></p>
+  <span style="opacity: 0"> {{ randomness }} </span>
+</div>
+
+</body>
+</html>

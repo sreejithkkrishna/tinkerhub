@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+</head>
+<body>
+	 <main role="main" class="container">
+
+	<center><h1>Participent Details</h1></center>
+
+
+<table id="customers">
+
+  <tr>
+    <th>NO</th>
+    <th>USERNAME</th>
+    <th>EMAIL</th>
+
+  </tr>
+
+  {% for username,email in participent %}
+  <tr>
+    <td>{{loop.index}}</td>
+    <td>{{username}}</td>
+    <td>{{email}}</td>
+
+  </tr>
+  {% endfor %}
+</table>
+</main>
+</body>
+</html>
